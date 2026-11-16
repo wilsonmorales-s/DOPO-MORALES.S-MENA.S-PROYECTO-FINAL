@@ -1,0 +1,29 @@
+@startuml
+mainframe sd separarJugadores
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam sequenceMessageAlign left
+
+participant ": Partido" as P
+participant "jugadorIzquierdo : Jugador" as JI
+participant "jugadorDerecho : Jugador" as JD
+
+[-> P : 1: separarJugadores() : void
+activate P
+P -> JD : 1.1: getCentroX() : double
+P -> JI : 1.2: getCentroX() : double
+P -> JD : 1.3: getCentroY() : double
+P -> JI : 1.4: getCentroY() : double
+opt distancia < distanciaMinima
+  P -> JI : 1.5: empujar(-sentido * falta / 2, campo) : void
+  P -> JD : 1.6: empujar(sentido * falta / 2, campo) : void
+  P -> JD : 1.7: getX() : double
+  P -> JI : 1.8: getX() : double
+  opt falta > 0
+    P -> JI : 1.9: empujar(-sentido * falta, campo) : void
+    P -> JD : 1.10: empujar(sentido * falta, campo) : void
+  end
+end
+deactivate P
+@enduml

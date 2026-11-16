@@ -1,0 +1,22 @@
+@startuml
+mainframe sd ConfiguracionPartido
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam sequenceMessageAlign left
+
+actor ": Actor0" as A
+participant ": ConfiguracionPartido" as C
+A --> C : 1: <<create>> configuracion = ConfiguracionPartido(tipo, limite, nombreIzquierdo, nombreDerecho)
+activate C
+alt tipo == null
+else limite < MIN_LIMITE o limite > MAX_LIMITE
+  alt tipo == POR_TIEMPO
+  else otherwise
+  end
+else nombre vacio o null
+else nombres iguales
+else otherwise
+end
+deactivate C
+@enduml

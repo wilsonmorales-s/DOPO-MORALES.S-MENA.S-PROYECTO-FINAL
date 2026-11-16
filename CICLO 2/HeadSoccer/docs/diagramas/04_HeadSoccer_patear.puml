@@ -1,0 +1,30 @@
+@startuml
+mainframe sd patear
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam sequenceMessageAlign left
+
+actor ": Actor0" as A
+participant ": HeadSoccer" as H
+participant ": Partido" as P
+participant ": Jugador" as J
+
+A -> H : 1: patear(lado) : void
+activate H
+H -> H : 1.1: jugador = buscarJugador(lado) : Jugador
+activate H
+alt partido != null
+  alt lado != null
+    H -> P : 1.1.1: getJugador(lado) : Jugador
+  else otherwise
+  end
+else otherwise
+end
+deactivate H
+H -> J : 1.2: patear() : void
+activate J
+J -> J : 1.2.1: estaPateando() : boolean
+deactivate J
+deactivate H
+@enduml

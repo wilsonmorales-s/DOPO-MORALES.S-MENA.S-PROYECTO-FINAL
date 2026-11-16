@@ -1,0 +1,9 @@
+VERSION UNO - HEAD SOCCER (Jugador vs Jugador)
+
+HeadSoccer/        Codigo (src/domain y src/presentation), pruebas (test/domain), JUnit (lib)
+HeadSoccer/docs/   Retrospectiva, capturas y diagramas de secuencia en astah
+Maqueta/           Enlace de Figma y capturas del juego
+                   Modelo en Astah con diagrama de clases, paquetes y secuencia
+
+Para jugar: ejecutar presentation.HeadSoccerGUI
+Para las pruebas: ver HeadSoccer/README.md

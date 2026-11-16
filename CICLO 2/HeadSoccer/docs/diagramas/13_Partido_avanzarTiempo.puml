@@ -1,0 +1,25 @@
+@startuml
+mainframe sd avanzarTiempo
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam sequenceMessageAlign left
+
+participant ": Partido" as P
+participant "configuracion : ConfiguracionPartido" as C
+participant ": Marcador" as M
+
+[-> P : 1: avanzarTiempo(dt) : void
+activate P
+P -> C : 1.1: getTipo() : TipoPartido
+opt tipo == POR_TIEMPO y !muerteSubita
+  opt tiempoRestante <= 0
+    P -> M : 1.2: getGoles(IZQUIERDA) : int
+    P -> M : 1.3: getGoles(DERECHA) : int
+    alt golesIzquierda == golesDerecha
+    else otherwise
+    end
+  end
+end
+deactivate P
+@enduml
