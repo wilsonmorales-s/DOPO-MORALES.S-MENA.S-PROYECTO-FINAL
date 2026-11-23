@@ -1,0 +1,24 @@
+@startuml
+mainframe sd terminar
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam sequenceMessageAlign left
+
+actor ": Actor0" as A
+participant ": HeadSoccer" as H
+participant ": Partido" as P
+
+A -> H : 1: terminar() : void
+activate H
+alt partido != null
+  H -> P : 1.1: terminar() : void
+  activate P
+  alt estado != FINALIZADO
+  else otherwise
+  end
+  deactivate P
+else otherwise
+end
+deactivate H
+@enduml

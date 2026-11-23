@@ -1,0 +1,42 @@
+@startuml
+mainframe sd verificarGol
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam sequenceMessageAlign left
+
+participant ": Partido" as P
+participant ": Balon" as B
+participant ": Campo" as CA
+participant ": Marcador" as M
+participant "configuracion : ConfiguracionPartido" as C
+participant "jugadorIzquierdo : Jugador" as JI
+participant "jugadorDerecho : Jugador" as JD
+
+[-> P : 1: verificarGol() : void
+activate P
+P -> B : 1.1: getX() : double
+P -> CA : 1.2: getAncho() : double
+opt anotador != null
+  P -> M : 1.3: sumarGol(anotador) : void
+  P -> C : 1.4: getTipo() : TipoPartido
+  opt tipo == POR_GOLES
+    P -> M : 1.5: getGoles(anotador) : int
+    P -> C : 1.6: getLimite() : int
+  end
+  alt muerteSubita o llegoALaMeta
+  else otherwise
+    P -> P : 1.7: reiniciarPosiciones() : void
+    activate P
+    P -> P : 1.7.1: xInicial(IZQUIERDA) : double
+    P -> JI : 1.7.2: reiniciar(x) : void
+    P -> P : 1.7.3: xInicial(DERECHA) : double
+    P -> JD : 1.7.4: reiniciar(x) : void
+    P -> CA : 1.7.5: getAncho() : double
+    P -> CA : 1.7.6: getAlto() : double
+    P -> B : 1.7.7: reiniciar(ancho / 2, alto / 2) : void
+    deactivate P
+  end
+end
+deactivate P
+@enduml

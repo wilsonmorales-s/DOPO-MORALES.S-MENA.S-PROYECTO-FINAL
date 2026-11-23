@@ -1,0 +1,27 @@
+@startuml
+mainframe sd revancha
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam sequenceMessageAlign left
+
+actor ": Actor0" as A
+participant ": HeadSoccer" as H
+participant ": Partido" as P
+participant "nuevo : Partido" as N
+
+A -> H : 1: revancha() : void
+activate H
+alt partido != null
+  H -> P : 1.1: configuracion = getConfiguracion() : ConfiguracionPartido
+  H -> H : 1.2: iniciarPartido(configuracion) : void
+  activate H
+  alt configuracion != null
+    H --> N : 1.2.1: <<create>> partido = Partido(configuracion)
+  else otherwise
+  end
+  deactivate H
+else otherwise
+end
+deactivate H
+@enduml

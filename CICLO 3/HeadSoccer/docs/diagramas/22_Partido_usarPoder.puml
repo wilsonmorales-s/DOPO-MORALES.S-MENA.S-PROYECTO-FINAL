@@ -1,0 +1,27 @@
+@startuml
+mainframe sd usarPoder
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam sequenceMessageAlign left
+
+participant ": Partido" as P
+participant "jugador : Jugador" as J
+participant ": Personaje" as PE
+
+[-> P : 1: usarPoder(jugador) : void
+activate P
+P -> J : 1.1: tieneAura() : boolean
+opt tieneAura
+  P -> J : 1.2: getCentroX() : double
+  P -> J : 1.3: getCentroY() : double
+  P -> J : 1.4: estaPateando() : boolean
+  opt distancia < alcance
+    P -> J : 1.5: consumirAura() : void
+    P -> J : 1.6: consumirPatada() : void
+    P -> J : 1.7: getPersonaje() : Personaje
+    P -> PE : 1.8: lanzarTiro(balon, jugador, this) : void
+  end
+end
+deactivate P
+@enduml

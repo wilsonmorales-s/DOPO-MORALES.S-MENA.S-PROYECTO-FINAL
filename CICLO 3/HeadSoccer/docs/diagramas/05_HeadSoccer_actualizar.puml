@@ -1,0 +1,36 @@
+@startuml
+mainframe sd actualizar
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam sequenceMessageAlign left
+
+actor ": Actor0" as A
+participant ": HeadSoccer" as H
+participant ": Partido" as P
+participant "jugadorIzquierdo : Jugador" as JI
+participant "jugadorDerecho : Jugador" as JD
+participant ": Balon" as B
+
+A -> H : 1: actualizar(dt) : void
+activate H
+alt partido != null
+  H -> P : 1.1: actualizar(dt) : void
+  activate P
+  opt estado == EN_JUEGO
+    P -> JI : 1.1.1: actualizar(dt, campo) : void
+    P -> JD : 1.1.2: actualizar(dt, campo) : void
+    P -> P : 1.1.3: separarJugadores() : void
+    P -> P : 1.1.4: resolverContacto(jugadorIzquierdo) : void
+    P -> P : 1.1.5: resolverContacto(jugadorDerecho) : void
+    P -> B : 1.1.6: actualizar(dt, campo) : void
+    P -> P : 1.1.7: verificarGol() : void
+    opt estado == EN_JUEGO
+      P -> P : 1.1.8: avanzarTiempo(dt) : void
+    end
+  end
+  deactivate P
+else otherwise
+end
+deactivate H
+@enduml

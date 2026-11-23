@@ -1,0 +1,23 @@
+@startuml
+mainframe sd getGanador
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam sequenceMessageAlign left
+
+actor ": Actor0" as A
+participant ": Partido" as P
+participant ": Marcador" as M
+
+A -> P : 1: getGanador() : Jugador
+activate P
+opt estado == FINALIZADO
+  P -> M : 1.1: getGoles(IZQUIERDA) : int
+  P -> M : 1.2: getGoles(DERECHA) : int
+  alt golesIzquierda > golesDerecha
+  else golesDerecha > golesIzquierda
+  else otherwise
+  end
+end
+deactivate P
+@enduml

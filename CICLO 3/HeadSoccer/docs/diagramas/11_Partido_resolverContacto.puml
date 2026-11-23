@@ -1,0 +1,36 @@
+@startuml
+mainframe sd resolverContacto
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam sequenceMessageAlign left
+
+participant ": Partido" as P
+participant ": Balon" as B
+participant "jugador : Jugador" as J
+
+[-> P : 1: resolverContacto(jugador) : void
+activate P
+P -> B : 1.1: getX() : double
+P -> J : 1.2: getCentroX() : double
+P -> B : 1.3: getY() : double
+P -> J : 1.4: getCentroY() : double
+opt distancia != 0
+  P -> J : 1.5: estaPateando() : boolean
+  alt pateando y distancia < distanciaMinima + ALCANCE_PATADA
+    P -> J : 1.6: getLado() : Lado
+    P -> B : 1.7: setVelocidad(sentido * FUERZA_PATADA, FUERZA_PATADA * 0.6) : void
+    P -> J : 1.8: consumirPatada() : void
+  else distancia < distanciaMinima
+    P -> J : 1.9: getCentroX() : double
+    P -> J : 1.10: getCentroY() : double
+    P -> B : 1.11: setPosicion(x, y) : void
+    P -> B : 1.12: getVx() : double
+    P -> B : 1.13: getVy() : double
+    P -> J : 1.14: getVx() : double
+    P -> J : 1.15: getVy() : double
+    P -> B : 1.16: setVelocidad(direccionX * rapidez + vxJugador, direccionY * rapidez + vyJugador) : void
+  end
+end
+deactivate P
+@enduml

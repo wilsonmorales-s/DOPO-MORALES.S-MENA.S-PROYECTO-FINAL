@@ -1,0 +1,22 @@
+Diagramas de la version uno que tienen lineas nuevas en la version tres
+(lo demas de cada diagrama queda igual)
+
+05 actualizar (dentro de Partido.actualizar, opt estado == EN_JUEGO):
+   antes de mover a los jugadores:   moverMaquinas(dt)
+   antes de resolverContacto:        verificarTiroDePoder()
+                                     usarPoder(jugadorIzquierdo)
+                                     usarPoder(jugadorDerecho)
+   despues de resolverContacto:      patearRival(jugadorIzquierdo)
+                                     patearRival(jugadorDerecho)
+   despues de balon.actualizar:      actualizarBalonesFalsos(dt)
+   antes de verificarGol:            marcador.getGoles(IZQUIERDA), marcador.getGoles(DERECHA)
+   despues de verificarGol:          revisarGolRecibido(golesIzquierda, golesDerecha)
+
+01 iniciarPartido:
+   al final del constructor de Partido:   prepararJugadores()
+   despues de crear el partido:           aplicarEstadisticas()
+
+03 saltar (dentro de Jugador.saltar):   puedeSaltar() y getVelocidadSalto()
+04 patear (dentro de Jugador.patear):   puedePatear()
+
+Diagramas nuevos: del 16 al 23.

@@ -1,0 +1,39 @@
+@startuml
+mainframe sd verificarTiroDePoder
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam sequenceMessageAlign left
+
+participant ": Partido" as P
+participant ": Balon" as B
+participant "lanzador : Jugador" as L
+participant "rival : Jugador" as R
+participant ": Personaje" as PE
+participant "efecto : Efecto" as E
+
+[-> P : 1: verificarTiroDePoder() : void
+activate P
+P -> B : 1.1: esTiroDePoder() : boolean
+opt esTiroDePoder
+  P -> B : 1.2: getLanzador() : Lado
+  P -> P : 1.3: lanzador = getJugador(lado) : Jugador
+  P -> P : 1.4: rival = getRival(lanzador) : Jugador
+  alt distancia < RADIO + RADIO_BALON
+    P -> L : 1.5: getPersonaje() : Personaje
+    P -> PE : 1.6: getDanoTiro() : double
+    P -> L : 1.7: getMultiplicadorKick() : double
+    P -> R : 1.8: recibirDano(danoTiro * multiplicadorKick) : void
+    P -> PE : 1.9: efecto = crearEfecto() : Efecto
+    PE --> E : 1.9.1: <<create>> efecto = Efecto()
+    P -> R : 1.10: aplicarEfecto(efecto, this) : void
+    activate R
+    R -> E : 1.10.1: alAplicar(this, partido) : void
+    deactivate R
+    P -> B : 1.11: terminarTiroDePoder() : void
+  else rival pateando y al alcance del pie
+    P -> B : 1.12: terminarTiroDePoder() : void
+  end
+end
+deactivate P
+@enduml

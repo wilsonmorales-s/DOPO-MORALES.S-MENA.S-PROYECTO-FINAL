@@ -1,0 +1,42 @@
+@startuml
+mainframe sd iniciarPartido
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam sequenceMessageAlign left
+
+actor ": Actor0" as A
+participant ": HeadSoccer" as H
+participant "configuracion : ConfiguracionPartido" as C
+participant ": Partido" as P
+participant ": Campo" as CA
+participant ": Marcador" as M
+participant "jugadorIzquierdo : Jugador" as JI
+participant "jugadorDerecho : Jugador" as JD
+participant ": Balon" as B
+
+A -> H : 1: iniciarPartido(configuracion) : void
+activate H
+alt configuracion != null
+  H --> P : 1.1: <<create>> partido = Partido(configuracion)
+  activate P
+  P --> CA : 1.1.1: <<create>> campo = Campo()
+  P --> M : 1.1.2: <<create>> marcador = Marcador()
+  P -> C : 1.1.3: getNombreIzquierdo() : String
+  P -> P : 1.1.4: xInicial(IZQUIERDA) : double
+  P --> JI : 1.1.5: <<create>> jugadorIzquierdo = Jugador(nombreIzquierdo, IZQUIERDA, x)
+  P -> C : 1.1.6: getNombreDerecho() : String
+  P -> P : 1.1.7: xInicial(DERECHA) : double
+  P --> JD : 1.1.8: <<create>> jugadorDerecho = Jugador(nombreDerecho, DERECHA, x)
+  P -> CA : 1.1.9: getAncho() : double
+  P -> CA : 1.1.10: getAlto() : double
+  P --> B : 1.1.11: <<create>> balon = Balon(ancho / 2, alto / 2)
+  P -> C : 1.1.12: getTipo() : TipoPartido
+  opt tipo == POR_TIEMPO
+    P -> C : 1.1.13: getLimite() : int
+  end
+  deactivate P
+else otherwise
+end
+deactivate H
+@enduml

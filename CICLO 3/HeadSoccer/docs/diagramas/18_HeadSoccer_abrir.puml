@@ -1,0 +1,34 @@
+@startuml
+mainframe sd abrir
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam sequenceMessageAlign left
+
+actor ": Actor0" as A
+participant ": HeadSoccer" as H
+participant "entrada : ObjectInputStream" as I
+participant "partido : Partido" as P
+
+A -> H : 1: abrir(archivo) : void
+activate H
+alt archivo != null
+  alt archivo.exists()
+    H -> H : 1.1: leido = leer(archivo) : Object
+    activate H
+    H --> I : 1.1.1: <<create>> entrada = ObjectInputStream(FileInputStream(archivo))
+    H -> I : 1.1.2: readObject() : Object
+    deactivate H
+    alt leido instanceof Partido
+      H -> P : 1.2: getEstado() : EstadoPartido
+      opt estado == EN_JUEGO
+        H -> P : 1.3: pausar() : void
+      end
+    else otherwise
+    end
+  else otherwise
+  end
+else otherwise
+end
+deactivate H
+@enduml

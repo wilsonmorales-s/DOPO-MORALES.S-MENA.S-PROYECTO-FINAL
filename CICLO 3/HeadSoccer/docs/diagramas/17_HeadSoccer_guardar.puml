@@ -1,0 +1,26 @@
+@startuml
+mainframe sd guardar
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam sequenceMessageAlign left
+
+actor ": Actor0" as A
+participant ": HeadSoccer" as H
+participant "salida : ObjectOutputStream" as O
+
+A -> H : 1: guardar(archivo) : void
+activate H
+alt archivo != null
+  alt partido != null
+    H -> H : 1.1: escribir(archivo, partido) : void
+    activate H
+    H --> O : 1.1.1: <<create>> salida = ObjectOutputStream(FileOutputStream(archivo))
+    H -> O : 1.1.2: writeObject(partido) : void
+    deactivate H
+  else otherwise
+  end
+else otherwise
+end
+deactivate H
+@enduml

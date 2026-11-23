@@ -1,0 +1,24 @@
+@startuml
+mainframe sd reanudar
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam sequenceMessageAlign left
+
+actor ": Actor0" as A
+participant ": HeadSoccer" as H
+participant ": Partido" as P
+
+A -> H : 1: reanudar() : void
+activate H
+alt partido != null
+  H -> P : 1.1: reanudar() : void
+  activate P
+  alt estado == PAUSADO
+  else otherwise
+  end
+  deactivate P
+else otherwise
+end
+deactivate H
+@enduml

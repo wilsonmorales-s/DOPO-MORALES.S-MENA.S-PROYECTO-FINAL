@@ -1,0 +1,31 @@
+@startuml
+mainframe sd registrarResultado
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam sequenceMessageAlign left
+
+actor ": Actor0" as A
+participant ": HeadSoccer" as H
+participant ": Partido" as P
+participant ": Progreso" as PR
+
+A -> H : 1: registrarResultado() : void
+activate H
+alt partido != null
+  H -> P : 1.1: getEstado() : EstadoPartido
+  H -> P : 1.2: puntosRegistrados() : boolean
+  opt estado == FINALIZADO y !puntosRegistrados
+    H -> P : 1.3: getJugador(IZQUIERDA) : Jugador
+    H -> P : 1.4: getJugador(DERECHA) : Jugador
+    H -> P : 1.5: getPuntosGanados(IZQUIERDA) : int
+    H -> PR : 1.6: sumarPuntos(nombreIzquierdo, puntos) : void
+    H -> P : 1.7: getPuntosGanados(DERECHA) : int
+    H -> PR : 1.8: sumarPuntos(nombreDerecho, puntos) : void
+    H -> P : 1.9: marcarPuntosRegistrados() : void
+    H -> H : 1.10: guardarProgreso() : void
+  end
+else otherwise
+end
+deactivate H
+@enduml
